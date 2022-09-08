@@ -1,0 +1,18 @@
+{
+  "name": "normalize-any-latlng",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "author": "kamataryo <6292312+kamataryo@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "build": "rm -r dist ; tsc"
+  },
+  "devDependencies": {
+    "@types/jest": "^28",
+    "jest": "^28",
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.8.2"
+  }
+}
