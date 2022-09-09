@@ -1,7 +1,8 @@
 {
-  "name": "normalize-any-latlng",
-  "version": "1.0.0",
+  "name": "@geolonia/normalize-any-latlng",
+  "version": "0.0.1",
   "main": "dist/index.js",
+  "cli": "dist/cli.js",
   "type": "module",
   "license": "MIT",
   "scripts": {

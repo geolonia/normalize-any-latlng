@@ -17,7 +17,6 @@ export type NormalizeOptions = {
 
 export type Normalize = (latlngStr: string, options?: Partial<NormalizeOptions>) => NormalizationResult[]
 
-
 const parseAnyNumber = (numberStr: string) => {
 
   let walker = numberStr
