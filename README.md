@@ -1,6 +1,6 @@
 # normalize-any-latlng
 
-Normalize Any LatLng or (NAL) is a human readable Latitude/Longitude string normalizer.
+Normalize Any LatLng is a human readable Latitude/Longitude string normalizer.
 
 ## development
 
