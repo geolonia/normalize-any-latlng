@@ -9,7 +9,7 @@ $ yarn
 $ yarn test
 ```
 
-## install
+## get started
 
 ### CLI
 
@@ -19,6 +19,10 @@ $ normalize-any-latlng '北緯32度53分9.35秒 東経130度11分9.34秒'
 ```
 
 ### JavaScript
+
+```shell
+$ yarn add git@github.com:geolonia/normalize-any-latlng.git#latest
+```
 
 ```javascript
 import { normalize } from '@geolonia/normalize-any-latlng'
