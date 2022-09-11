@@ -4,18 +4,12 @@ export type NormalizationResult = {
   format?: string
 }
 
-export const affixPresets = {
+const affixPresets = {
   jp: ['北緯?','南緯?','東経?','西経?'],
   ko: ['북위?','남위?','동경?','서경?'],
 }
 
-export type AffixLocale = keyof typeof affixPresets
-
-export type NormalizeOptions = {
-  affixLocales: AffixLocale[]
-}
-
-export type Normalize = (latlngStr: string, options?: Partial<NormalizeOptions>) => NormalizationResult[]
+export type Normalize = (latlngStr: string) => NormalizationResult[]
 
 const parseAnyNumber = (numberStr: string) => {
 
@@ -85,10 +79,7 @@ const parseAnyNumber = (numberStr: string) => {
 
 export const normalize: Normalize = (latlngStr, options = {}) => {
 
-  const affixRegexPatterns = ['[NSEW]']
-  for (const affixLocale of options.affixLocales || ['jp']) {
-    affixRegexPatterns.push(...affixPresets[affixLocale])
-  }
+  const affixRegexPatterns = ['[NSEW]', ...affixPresets.jp, ...affixPresets.ko]
 
   const latlngFlagments = latlngStr
     .trim()

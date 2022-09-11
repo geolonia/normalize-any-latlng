@@ -1,15 +1,15 @@
-import { AffixLocale, NormalizationResult, normalize } from './index'
+import { NormalizationResult, normalize } from './index'
 
-const separators = [...new Set(',|\t :;　'.split('').reduce<string[]>((prev, _s) => {
+const separators = [...new Set(',|\t :;　/'.split('').reduce<string[]>((prev, _s) => {
   prev.push(_s, `${_s} `, ` ${_s}`, `${_s}${_s}`)
   return prev
 }, []))]
 
-type Case = { title: string, input: string, output: NormalizationResult[], affixLocales?: AffixLocale[] }
+type Case = { title: string, input: string, output: NormalizationResult[] }
 
 const successCases: Case[] = [
   // separators
-  ...separators.map(sep => ({ title: `Separator: "${sep}"`, input: '35.1234, 135.6789', output: [{ lat: 35.1234, lng: 135.6789 }] })),
+  ...separators.map(sep => ({ title: `Separator: "${sep}"`, input: `35.1234${sep}135.6789`, output: [{ lat: 35.1234, lng: 135.6789 }] })),
 
   // float
   { title: 'Only Float, order: lat -> lng', input: '35.1234, 135.6789', output: [{ lat: 35.1234, lng: 135.6789 }] },
@@ -105,19 +105,21 @@ const successCases: Case[] = [
 
   { title: `DD°MM'SS'', order: lat -> lng`, input: `35°12'34'', 135°43'21.01''`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
 
-  // locales
+  //　examples
   { title: 'https://en.wikipedia.org/wiki/Aqaba', input: '29°31′55″N 35°00′20″E', output: [{ lat: 29 + 31 / 60 + 55 / 3600, lng: 35 + 0 / 60 + 20 / 3600 }] },
-  { title: 'https://ko.wikipedia.org/wiki/서울특별시', input: '북위37°34′00″ 동경126°58′41″', output: [{ lat: 37 + 34 / 60 + 0 / 3600, lng: 126 + 58 / 60 + 41 / 3600 }], affixLocales: ['ko'] },
-  { title: 'https://ko.wikipedia.org/wiki/부에노스아이레스', input: '남위34°36′12″ 서경58°22′54″', output: [{ lat: -1 * (34 + 36 / 60 + 12 / 3600), lng: -1 * (58 + 22 / 60 + 54 / 3600) }], affixLocales: ['ko'] },
+  { title: 'https://ko.wikipedia.org/wiki/서울특별시', input: '북위37°34′00″ 동경126°58′41″', output: [{ lat: 37 + 34 / 60 + 0 / 3600, lng: 126 + 58 / 60 + 41 / 3600 }] },
+  { title: 'https://ko.wikipedia.org/wiki/부에노스아이레스', input: '남위34°36′12″ 서경58°22′54″', output: [{ lat: -1 * (34 + 36 / 60 + 12 / 3600), lng: -1 * (58 + 22 / 60 + 54 / 3600) }] },
+  { title: 'https://ja.wikipedia.org/wiki/諫早湾', input: '北緯32度53分9.35秒 東経130度11分9.34秒', output: [{ lat: 32 + 53 / 60 + 9.35 / 3600, lng: 130 + 11 / 60 + 9.34 / 3600 }] },
+  { title: 'https://en.wikipedia.org/wiki/Canada', input: '45°24′N 75°40′W', output: [{ lat: 45 + 24 / 60, lng: -1 * (75 + 40 / 60) }] },
 
-  // error
+  // errors
   { title: 'invalid latlng', input: 'aaa bbb ccc', output: [{lat: null, lng: null}] }
 ]
 
 describe('success cases', () => {
-  for (const { title, input, output, affixLocales } of successCases) {
+  for (const { title, input, output } of successCases) {
     test(title, () => {
-      expect(normalize(input, { affixLocales })).toEqual(output)
+      expect(normalize(input)).toEqual(output)
     })
   }
 })

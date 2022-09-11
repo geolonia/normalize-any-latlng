@@ -2,11 +2,12 @@
   "name": "@geolonia/normalize-any-latlng",
   "version": "0.0.1",
   "main": "dist/index.js",
-  "cli": "dist/cli.js",
+  "bin": "dist/cli.js",
   "type": "module",
   "license": "MIT",
   "scripts": {
     "test": "jest",
+    "start": "ts-node src/cli.ts",
     "build": "rm -r dist ; tsc"
   },
   "devDependencies": {
