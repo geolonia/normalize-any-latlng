@@ -84,7 +84,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-!dist
+dist
 
 # Gatsby files
 .cache/
@@ -118,4 +118,3 @@ out
 .pnp.*
 
 
-github-pages-deploy-action-temp-deployment-folder
