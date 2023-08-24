@@ -13,6 +13,7 @@ const successCases: Case[] = [
 
   // float
   { title: 'Only Float, order: lat -> lng', input: '35.1234, 135.6789', output: [{ lat: 35.1234, lng: 135.6789 }] },
+  { title: 'Only Float, order: lng -> lat', input: '135.6789, 35.1234', output: [{ lat: 35.1234, lng: 135.6789 }] },
   { title: 'Only Float, order: lat -> lng, lng, overflow +1π', input: '35.1234, 315.6789', output: [{ lat: 35.1234, lng: -44.3211 }] },
   { title: 'Only Float, order: lat -> lng, lng, overflow +2π', input: '35.1234, 495.6789', output: [{ lat: 35.1234, lng: 135.6789 }] },
   { title: 'Only Float, order: lat -> lng, lng, overflow -1π', input: '35.1234, -44.3211', output: [{ lat: 35.1234, lng: -44.3211 }] },
@@ -86,7 +87,9 @@ const successCases: Case[] = [
 
   // DD°MM'SS"
   { title: `DD°MM'SS", order: lat -> lng`, input: `35°12'34", 135°43'21.01"`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
+  { title: `DD°MM'SS", order: lng -> lat`, input: `135°43'21.01", 35°12'34"`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
   { title: `DD°MM'SS", order: lat -> lng`, input: `-35°12'34", -135°43'21.01"`, output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
+  { title: `DD°MM'SS", order: lng -> lat`, input: `-135°43'21.01", -35°12'34"`, output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
   { title: `DD°MM'SS", order: lat -> lng, lng, overflow +1π`, input: `35°12'34", 315°43'21.01"`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 315 + 43 / 60 + 21.01 / 3600 - 360 }] },
   { title: `DD°MM'SS", order: N -> E`, input: `N35°12'34", E135°43'21.01"`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
   { title: `DD°MM'SS", order: 南緯 -> 西経`, input: `南緯35°12'34", 西経135°43'21.01"`, output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },

@@ -77,7 +77,7 @@ const parseAnyNumber = (numberStr: string) => {
 }
 
 
-export const normalize: Normalize = (latlngStr, options = {}) => {
+export const normalize: Normalize = (latlngStr) => {
 
   const affixRegexPatterns = ['[NSEW]', ...affixPresets.jp, ...affixPresets.ko]
 
@@ -139,6 +139,11 @@ export const normalize: Normalize = (latlngStr, options = {}) => {
 
   if(!useDirectionIdentifier) {
     [lat, lng] = latlngPieces.map(val => parseAnyNumber(val))
+
+    // order auto detection
+    if ((lat > 90 || lat < -90) && (lng < 90 && lng > -90)) {
+      [lng, lat] = [lat, lng]
+    }
   }
 
   if((typeof lat === 'number' && (lat < -90 ||  lat > 90) || Number.isNaN(lat))) {
@@ -148,6 +153,7 @@ export const normalize: Normalize = (latlngStr, options = {}) => {
   if(typeof lng !== 'number' || Number.isNaN(lng)) {
     lng = null
   } else {
+    // lng 2pi normalization
     while (lng < -180 || lng > 180) {
       if(lng < -180) {
         lng += 360
