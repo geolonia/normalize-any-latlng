@@ -117,7 +117,10 @@ const successCases: Case[] = [
 ]
 
 describe('success cases', () => {
+  const hasOnly = successCases.some(({ title }) => title.startsWith('[only]'))
   for (const { title, input, output } of successCases) {
+    const isOnly = title.startsWith('[only]')
+    if(hasOnly && !isOnly) continue
     test(title, () => {
       expect(normalize(input)).toEqual(output)
     })
