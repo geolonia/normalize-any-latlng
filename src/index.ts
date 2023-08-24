@@ -81,7 +81,7 @@ export const normalize: Normalize = (latlngStr, options = {}) => {
 
   const affixRegexPatterns = ['[NSEW]', ...affixPresets.jp, ...affixPresets.ko]
 
-  const latlngFlagments = latlngStr
+  const latlngPieces = latlngStr
     .trim()
     .toUpperCase()
     .replace(/[Ａ-Ｚ０-９]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
@@ -96,7 +96,7 @@ export const normalize: Normalize = (latlngStr, options = {}) => {
   let lng: number | null = null
   let useDirectionIdentifier = false
 
-  for (const target of latlngFlagments) {
+  for (const target of latlngPieces) {
 
     let match: RegExpMatchArray | null
 
@@ -138,7 +138,7 @@ export const normalize: Normalize = (latlngStr, options = {}) => {
   }
 
   if(!useDirectionIdentifier) {
-    [lat, lng] = latlngFlagments.map(val => parseAnyNumber(val))
+    [lat, lng] = latlngPieces.map(val => parseAnyNumber(val))
   }
 
   if((typeof lat === 'number' && (lat < -90 ||  lat > 90) || Number.isNaN(lat))) {
