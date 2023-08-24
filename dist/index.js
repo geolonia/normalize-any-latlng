@@ -61,7 +61,7 @@ const parseAnyNumber = (numberStr) => {
     }
     return sumDegree;
 };
-export const normalize = (latlngStr, options = {}) => {
+export const normalize = (latlngStr) => {
     const affixRegexPatterns = ['[NSEW]', ...affixPresets.jp, ...affixPresets.ko];
     const latlngPieces = latlngStr
         .trim()
@@ -121,6 +121,10 @@ export const normalize = (latlngStr, options = {}) => {
     }
     if (!useDirectionIdentifier) {
         [lat, lng] = latlngPieces.map(val => parseAnyNumber(val));
+        // order auto detection
+        if ((lat > 90 || lat < -90) && (lng < 90 && lng > -90)) {
+            [lng, lat] = [lat, lng];
+        }
     }
     if ((typeof lat === 'number' && (lat < -90 || lat > 90) || Number.isNaN(lat))) {
         lat = null;
@@ -129,6 +133,7 @@ export const normalize = (latlngStr, options = {}) => {
         lng = null;
     }
     else {
+        // lng 2pi normalization
         while (lng < -180 || lng > 180) {
             if (lng < -180) {
                 lng += 360;
