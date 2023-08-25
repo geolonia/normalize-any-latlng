@@ -106,6 +106,7 @@ export const normalize: Normalize = (latlngStr) => {
       useDirectionIdentifier = true
       const prefix = match[1]
       const number = parseAnyNumber(match[2])
+      // TODO: remove hardcode and use affixPresets
       if(prefix === 'N' || prefix[0] === '北' || prefix[0] === '북') {
         lat = number
       } else if (prefix === 'S' || prefix[0] === '南' || prefix[0] === '남') {
@@ -124,6 +125,7 @@ export const normalize: Normalize = (latlngStr) => {
       useDirectionIdentifier = true
       const postfix = match[2]
       const number = parseAnyNumber(match[1])
+      // TODO: remove hardcode and use affixPresets
       if(postfix === 'N' || postfix[0] === '北' || postfix[0] === '북') {
         lat = number
       } else if (postfix === 'S' || postfix[0] === '南' || postfix[0] === '남') {
