@@ -1,15 +1,15 @@
-import { NormalizationResult, normalize } from './index'
+import { NormalizationResult, normalize } from './index';
 
 const separators = [...new Set(',|\t :;　/'.split('').reduce<string[]>((prev, _s) => {
-  prev.push(_s, `${_s} `, ` ${_s}`, `${_s}${_s}`)
-  return prev
-}, []))]
+  prev.push(_s, `${_s} `, ` ${_s}`, `${_s}${_s}`);
+  return prev;
+}, []))];
 
-type Case = { title: string, input: string, output: NormalizationResult[] }
+type Case = { title: string, input: string, output: NormalizationResult[] };
 
 const successCases: Case[] = [
   // separators
-  ...separators.map(sep => ({ title: `Separator: "${sep}"`, input: `35.1234${sep}135.6789`, output: [{ lat: 35.1234, lng: 135.6789 }] })),
+  ...separators.map((sep) => ({ title: `Separator: "${sep}"`, input: `35.1234${sep}135.6789`, output: [{ lat: 35.1234, lng: 135.6789 }] })),
 
   // float
   { title: 'Only Float, order: lat -> lng', input: '35.1234, 135.6789', output: [{ lat: 35.1234, lng: 135.6789 }] },
@@ -86,29 +86,29 @@ const successCases: Case[] = [
   { title: 'Japanese Postfix, order: 北 -> 東, overflow +1π', input: '北35.1234, 東315.6789', output: [{ lat: 35.1234, lng: -44.3211 }] },
 
   // DD°MM'SS"
-  { title: `DD°MM'SS", order: lat -> lng`, input: `35°12'34", 135°43'21.01"`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
-  { title: `DD°MM'SS", order: lng -> lat`, input: `135°43'21.01", 35°12'34"`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
-  { title: `DD°MM'SS", order: lat -> lng`, input: `-35°12'34", -135°43'21.01"`, output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
-  { title: `DD°MM'SS", order: lng -> lat`, input: `-135°43'21.01", -35°12'34"`, output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
-  { title: `DD°MM'SS", order: lat -> lng, lng, overflow +1π`, input: `35°12'34", 315°43'21.01"`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 315 + 43 / 60 + 21.01 / 3600 - 360 }] },
-  { title: `DD°MM'SS", order: N -> E`, input: `N35°12'34", E135°43'21.01"`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
-  { title: `DD°MM'SS", order: 南緯 -> 西経`, input: `南緯35°12'34", 西経135°43'21.01"`, output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
+  { title: 'DD°MM\'SS", order: lat -> lng', input: '35°12\'34", 135°43\'21.01"', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
+  { title: 'DD°MM\'SS", order: lng -> lat', input: '135°43\'21.01", 35°12\'34"', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
+  { title: 'DD°MM\'SS", order: lat -> lng', input: '-35°12\'34", -135°43\'21.01"', output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
+  { title: 'DD°MM\'SS", order: lng -> lat', input: '-135°43\'21.01", -35°12\'34"', output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
+  { title: 'DD°MM\'SS", order: lat -> lng, lng, overflow +1π', input: '35°12\'34", 315°43\'21.01"', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 315 + 43 / 60 + 21.01 / 3600 - 360 }] },
+  { title: 'DD°MM\'SS", order: N -> E', input: 'N35°12\'34", E135°43\'21.01"', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
+  { title: 'DD°MM\'SS", order: 南緯 -> 西経', input: '南緯35°12\'34", 西経135°43\'21.01"', output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
 
-  { title: `DD°MM'SS", order: lat -> lng`, input: `35°12'34, 135°43'21.01`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
-  { title: `DD°MM'SS", order: lat -> lng`, input: `-35°12'34, -135°43'21.01`, output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
-  { title: `DD°MM'SS", order: lat -> lng, lng, overflow +1π`, input: `35°12'34, 315°43'21.01`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 315 + 43 / 60 + 21.01 / 3600 - 360 }] },
-  { title: `DD°MM'SS", order: N -> E`, input: `N35°12'34, E135°43'21.01`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
-  { title: `DD°MM'SS", order: 南緯 -> 西経`, input: `南緯35°12'34, 西経135°43'21.01`, output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
+  { title: 'DD°MM\'SS", order: lat -> lng', input: '35°12\'34, 135°43\'21.01', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
+  { title: 'DD°MM\'SS", order: lat -> lng', input: '-35°12\'34, -135°43\'21.01', output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
+  { title: 'DD°MM\'SS", order: lat -> lng, lng, overflow +1π', input: '35°12\'34, 315°43\'21.01', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 315 + 43 / 60 + 21.01 / 3600 - 360 }] },
+  { title: 'DD°MM\'SS", order: N -> E', input: 'N35°12\'34, E135°43\'21.01', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
+  { title: 'DD°MM\'SS", order: 南緯 -> 西経', input: '南緯35°12\'34, 西経135°43\'21.01', output: [{ lat: -(35 + 12 / 60 + 34 / 3600), lng: -(135 + 43 / 60 + 21.01 / 3600) }] },
 
-  { title: `DD°MM'SS", order: lat -> lng`, input: `35°12, 135°43.21`, output: [{ lat: 35 + 12 / 60, lng: 135 + 43.21 / 60 }] },
-  { title: `DD°MM'SS", order: lat -> lng`, input: `-35°12, -135°43.21`, output: [{ lat: -(35 + 12 / 60), lng: -(135 + 43.21 / 60) }] },
-  { title: `DD°MM'SS", order: lat -> lng, lng, overflow +1π`, input: `35°12, 315°43.21`, output: [{ lat: 35 + 12 / 60, lng: 315 + 43.21 / 60 - 360 }] },
-  { title: `DD°MM'SS", order: N -> E`, input: `N35°12, E135°43.21`, output: [{ lat: 35 + 12 / 60, lng: 135 + 43.21 / 60 }] },
-  { title: `DD°MM'SS", order: 南緯 -> 西経`, input: `南緯35°12, 西経135°43.21`, output: [{ lat: -(35 + 12 / 60), lng: -(135 + 43.21 / 60) }] },
+  { title: 'DD°MM\'SS", order: lat -> lng', input: '35°12, 135°43.21', output: [{ lat: 35 + 12 / 60, lng: 135 + 43.21 / 60 }] },
+  { title: 'DD°MM\'SS", order: lat -> lng', input: '-35°12, -135°43.21', output: [{ lat: -(35 + 12 / 60), lng: -(135 + 43.21 / 60) }] },
+  { title: 'DD°MM\'SS", order: lat -> lng, lng, overflow +1π', input: '35°12, 315°43.21', output: [{ lat: 35 + 12 / 60, lng: 315 + 43.21 / 60 - 360 }] },
+  { title: 'DD°MM\'SS", order: N -> E', input: 'N35°12, E135°43.21', output: [{ lat: 35 + 12 / 60, lng: 135 + 43.21 / 60 }] },
+  { title: 'DD°MM\'SS", order: 南緯 -> 西経', input: '南緯35°12, 西経135°43.21', output: [{ lat: -(35 + 12 / 60), lng: -(135 + 43.21 / 60) }] },
 
-  { title: `DD°MM'SS'', order: lat -> lng`, input: `35°12'34'', 135°43'21.01''`, output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
+  { title: 'DD°MM\'SS\'\', order: lat -> lng', input: '35°12\'34\'\', 135°43\'21.01\'\'', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
 
-  //　examples
+  // examples
   { title: 'https://en.wikipedia.org/wiki/Aqaba', input: '29°31′55″N 35°00′20″E', output: [{ lat: 29 + 31 / 60 + 55 / 3600, lng: 35 + 0 / 60 + 20 / 3600 }] },
   { title: 'https://ko.wikipedia.org/wiki/서울특별시', input: '북위37°34′00″ 동경126°58′41″', output: [{ lat: 37 + 34 / 60 + 0 / 3600, lng: 126 + 58 / 60 + 41 / 3600 }] },
   { title: 'https://ko.wikipedia.org/wiki/부에노스아이레스', input: '남위34°36′12″ 서경58°22′54″', output: [{ lat: -1 * (34 + 36 / 60 + 12 / 3600), lng: -1 * (58 + 22 / 60 + 54 / 3600) }] },
@@ -116,16 +116,16 @@ const successCases: Case[] = [
   { title: 'https://en.wikipedia.org/wiki/Canada', input: '45°24′N 75°40′W', output: [{ lat: 45 + 24 / 60, lng: -1 * (75 + 40 / 60) }] },
 
   // errors
-  { title: 'invalid latlng', input: 'aaa bbb ccc', output: [{lat: null, lng: null}] }
-]
+  { title: 'invalid latlng', input: 'aaa bbb ccc', output: [{lat: null, lng: null}] },
+];
 
 describe('success cases', () => {
-  const hasOnly = successCases.some(({ title }) => title.startsWith('[only]'))
+  const hasOnly = successCases.some(({ title }) => title.startsWith('[only]'));
   for (const { title, input, output } of successCases) {
-    const isOnly = title.startsWith('[only]')
-    if(hasOnly && !isOnly) continue
+    const isOnly = title.startsWith('[only]');
+    if (hasOnly && !isOnly) continue;
     test(title, () => {
-      expect(normalize(input)).toEqual(output)
-    })
+      expect(normalize(input)).toEqual(output);
+    });
   }
-})
+});
