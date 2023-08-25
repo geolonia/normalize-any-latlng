@@ -85,6 +85,9 @@ const successCases: Case[] = [
   { title: 'Japanese Postfix, order: 西 -> 南', input: '西135.6789, 南35.1234', output: [{ lat: -35.1234, lng: -135.6789 }] },
   { title: 'Japanese Postfix, order: 北 -> 東, overflow +1π', input: '北35.1234, 東315.6789', output: [{ lat: 35.1234, lng: -44.3211 }] },
 
+  // DD.DDD°
+  { title: 'DD.DDD°, order: N -> E', input: 'N35.1234°, E135.6789°', output: [{ lat: 35.1234, lng: 135.6789 }] },
+
   // DD°MM'SS"
   { title: 'DD°MM\'SS", order: lat -> lng', input: '35°12\'34", 135°43\'21.01"', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
   { title: 'DD°MM\'SS", order: lng -> lat', input: '135°43\'21.01", 35°12\'34"', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
