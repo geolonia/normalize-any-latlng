@@ -24,9 +24,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn
-      - run: yarn test
-      - run: yarn build
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
 
   publish:
     name: 'Publish npm package'
@@ -40,8 +41,8 @@ jobs:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@geolonia'
-      - run: yarn
-      - run: yarn build
+      - run: npm ci
+      - run: npm run build
       - run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

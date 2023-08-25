@@ -7,15 +7,17 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint src/**/*.ts",
     "test": "jest",
     "start": "ts-node src/cli.ts",
     "build": "rm -r dist ; tsc"
   },
   "devDependencies": {
+    "@geolonia/eslint-config": "^0.0.7",
     "@types/jest": "^28",
+    "eslint": "^8.47.0",
     "jest": "^28",
     "ts-jest": "^28.0.8",
     "typescript": "^4.8.2"
-  },
-  "dependencies": {}
+  }
 }
