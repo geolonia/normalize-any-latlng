@@ -11,6 +11,6 @@ module.exports = {
   },
 
   parserOptions: {
-    project: ['tsconfig.json'], // add if you use TypeScript in the project
+    project: ['tsconfig.json'],
   },
 };

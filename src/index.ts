@@ -167,4 +167,3 @@ export const normalize: Normalize = (latlngStr) => {
 
   return [{ lat, lng }];
 };
-

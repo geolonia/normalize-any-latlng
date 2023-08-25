@@ -2,15 +2,17 @@
   "name": "@geolonia/normalize-any-latlng",
   "version": "0.0.1",
   "description": "a tool for normalizing Latitude and Longitude strings.",
-  "main": "dist/index.js",
-  "bin": "dist/cli.js",
-  "types": "dist/index.d.ts",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "bin": "cjs/cli.js",
+  "types": "cjs/index.d.ts",
+  "sideEffects": false,
   "license": "MIT",
   "scripts": {
     "lint": "eslint src/**/*.ts",
     "test": "jest",
     "start": "ts-node src/cli.ts",
-    "build": "rm -r dist ; tsc"
+    "build": "rm -r cjs esm ; tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json"
   },
   "devDependencies": {
     "@geolonia/eslint-config": "^0.0.7",

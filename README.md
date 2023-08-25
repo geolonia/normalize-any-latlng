@@ -2,7 +2,7 @@
 
 [![build](https://github.com/geolonia/normalize-any-latlng/actions/workflows/test.yml/badge.svg)](https://github.com/geolonia/normalize-any-latlng/actions/workflows/test.yml)
 
-`@geolonia/normalize-any-latLng is a tool for normalizing Latitude and Longitude strings.
+`@geolonia/normalize-any-latLng` is a tool for normalizing Latitude and Longitude strings.
 
 Here are some examples of how to use it:
 
@@ -44,6 +44,6 @@ $ npx @geolonia/normalize-any-latlng '北緯32度53分9.35秒 東経130度11分9
 import { normalize } from '@geolonia/normalize-any-latlng'
 const result = normalize('北緯32度53分9.35秒 東経130度11分9.34秒')
 
-result[0].lat === 32.885930556  // true
-result[0].lng === 130.185927778 // true
+assert(result[0].lat === 32.885930556)
+assert(result[0].lng === 130.185927778)
 ```
