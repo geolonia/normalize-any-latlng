@@ -1,6 +1,6 @@
 {
   "name": "@geolonia/normalize-any-latlng",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a tool for normalizing Latitude and Longitude strings.",
   "main": "cjs/index.js",
   "module": "esm/index.js",
