@@ -1,3 +1,5 @@
+import { isFatDegreeFormat } from './lib';
+
 export type NormalizationResult = {
   lat: number | null
   lng: number | null
@@ -146,6 +148,13 @@ export const normalize: Normalize = (latlngStr) => {
     if ((lat > 90 || lat < -90) && (lng < 90 && lng > -90)) {
       [lng, lat] = [lat, lng];
     }
+  }
+
+  const latInFatDegree = lat !== null ? isFatDegreeFormat(lat) : false;
+  const lngInFatDegree = lng !== null ? isFatDegreeFormat(lng) : false;
+  if (latInFatDegree && lngInFatDegree) {
+    lat = latInFatDegree.degree + latInFatDegree.minute / 60 + latInFatDegree.second / 3600;
+    lng = lngInFatDegree.degree + lngInFatDegree.minute / 60 + lngInFatDegree.second / 3600;
   }
 
   if ((typeof lat === 'number' && (lat < -90 ||  lat > 90) || Number.isNaN(lat))) {

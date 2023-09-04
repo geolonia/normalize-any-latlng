@@ -118,6 +118,10 @@ const successCases: Case[] = [
   { title: 'https://ja.wikipedia.org/wiki/諫早湾', input: '北緯32度53分9.35秒 東経130度11分9.34秒', output: [{ lat: 32 + 53 / 60 + 9.35 / 3600, lng: 130 + 11 / 60 + 9.34 / 3600 }] },
   { title: 'https://en.wikipedia.org/wiki/Canada', input: '45°24′N 75°40′W', output: [{ lat: 45 + 24 / 60, lng: -1 * (75 + 40 / 60) }] },
 
+  // https://github.com/geolonia/normalize-any-latlng/issues/2
+  { title: '「度分秒.秒」 type', input: '北緯360613.58925　東経1400516.27815', output: [ { lat: 36 + 6 / 60 + 13.58925 / 3600, lng: 140 + 5 / 60 + 16.27815 / 3600 } ] },
+  { title: '「度分秒.秒」 type', input: '南緯360613.58925　西経1400516.27815', output: [ { lat: -36 - 6 / 60 - 13.58925 / 3600, lng: -140 - 5 / 60 - 16.27815 / 3600 } ] },
+
   // errors
   { title: 'invalid latlng', input: 'aaa bbb ccc', output: [{lat: null, lng: null}] },
 ];
