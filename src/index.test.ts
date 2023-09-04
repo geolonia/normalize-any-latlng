@@ -85,6 +85,9 @@ const successCases: Case[] = [
   { title: 'Japanese Postfix, order: 西 -> 南', input: '西135.6789, 南35.1234', output: [{ lat: -35.1234, lng: -135.6789 }] },
   { title: 'Japanese Postfix, order: 北 -> 東, overflow +1π', input: '北35.1234, 東315.6789', output: [{ lat: 35.1234, lng: -44.3211 }] },
 
+  // DD.DDD°
+  { title: 'DD.DDD°, order: N -> E', input: 'N35.1234°, E135.6789°', output: [{ lat: 35.1234, lng: 135.6789 }] },
+
   // DD°MM'SS"
   { title: 'DD°MM\'SS", order: lat -> lng', input: '35°12\'34", 135°43\'21.01"', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
   { title: 'DD°MM\'SS", order: lng -> lat', input: '135°43\'21.01", 35°12\'34"', output: [{ lat: 35 + 12 / 60 + 34 / 3600, lng: 135 + 43 / 60 + 21.01 / 3600 }] },
@@ -114,6 +117,10 @@ const successCases: Case[] = [
   { title: 'https://ko.wikipedia.org/wiki/부에노스아이레스', input: '남위34°36′12″ 서경58°22′54″', output: [{ lat: -1 * (34 + 36 / 60 + 12 / 3600), lng: -1 * (58 + 22 / 60 + 54 / 3600) }] },
   { title: 'https://ja.wikipedia.org/wiki/諫早湾', input: '北緯32度53分9.35秒 東経130度11分9.34秒', output: [{ lat: 32 + 53 / 60 + 9.35 / 3600, lng: 130 + 11 / 60 + 9.34 / 3600 }] },
   { title: 'https://en.wikipedia.org/wiki/Canada', input: '45°24′N 75°40′W', output: [{ lat: 45 + 24 / 60, lng: -1 * (75 + 40 / 60) }] },
+
+  // https://github.com/geolonia/normalize-any-latlng/issues/2
+  { title: '「度分秒.秒」 type', input: '北緯360613.58925　東経1400516.27815', output: [ { lat: 36 + 6 / 60 + 13.58925 / 3600, lng: 140 + 5 / 60 + 16.27815 / 3600 } ] },
+  { title: '「度分秒.秒」 type', input: '南緯360613.58925　西経1400516.27815', output: [ { lat: -36 - 6 / 60 - 13.58925 / 3600, lng: -140 - 5 / 60 - 16.27815 / 3600 } ] },
 
   // errors
   { title: 'invalid latlng', input: 'aaa bbb ccc', output: [{lat: null, lng: null}] },
