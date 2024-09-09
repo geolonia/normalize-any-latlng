@@ -7,11 +7,11 @@
 Here are some examples of how to use it:
 
 ```shell
-$ npx -p @geolonia/normalize-any-latlng normalize-any-latlng '29°31′55″N 35°00′20″E' # 29.531944444444445 35.00555555555555
-$ npx -p @geolonia/normalize-any-latlng normalize-any-latlng '북위37°34′00″ 동경126°58′41″' # 37.56666666666667 126.97805555555556
-$ npx -p @geolonia/normalize-any-latlng normalize-any-latlng '남위34°36′12″ 서경58°22′54″' # -34.60333333333333 -58.38166666666667
-$ npx -p @geolonia/normalize-any-latlng normalize-any-latlng '北緯32度53分9.35秒 東経130度11分9.34秒' # 32.885930555555554 130.18592777777778
-$ npx -p @geolonia/normalize-any-latlng normalize-any-latlng '45°24′N 75°40′W' # 45.4 -75.66666666666667
+$ npx @geolonia/normalize-any-latlng '29°31′55″N 35°00′20″E' # 29.531944444444445 35.00555555555555
+$ npx @geolonia/normalize-any-latlng '북위37°34′00″ 동경126°58′41″' # 37.56666666666667 126.97805555555556
+$ npx @geolonia/normalize-any-latlng '남위34°36′12″ 서경58°22′54″' # -34.60333333333333 -58.38166666666667
+$ npx @geolonia/normalize-any-latlng '北緯32度53分9.35秒 東経130度11分9.34秒' # 32.885930555555554 130.18592777777778
+$ npx @geolonia/normalize-any-latlng '45°24′N 75°40′W' # 45.4 -75.66666666666667
 ```
 
 You can see more normalization examples in [src/index.test.ts](./src/index.test.ts).

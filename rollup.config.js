@@ -10,7 +10,10 @@ const plugins = [
   commonjs({
     requireReturnsDefault: 'auto',
   }),
-  typescript({ useTsconfigDeclarationDir: true }),
+  typescript({
+    useTsconfigDeclarationDir: true,
+    tsconfig: 'tsconfig.prod.json',
+  }),
 ];
 
 export default [
