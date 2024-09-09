@@ -3,5 +3,11 @@
   "compilerOptions": {
     "module": "commonjs",
     "outDir": "cjs"
-  }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts"
+  ]
 }

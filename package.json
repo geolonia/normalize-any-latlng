@@ -6,6 +6,13 @@
   "module": "esm/index.js",
   "bin": "cjs/cli.js",
   "types": "cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./cjs/index.d.ts"
+    }
+  },
   "sideEffects": false,
   "license": "MIT",
   "scripts": {
