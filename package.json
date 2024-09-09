@@ -1,6 +1,6 @@
 {
   "name": "@geolonia/normalize-any-latlng",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a tool for normalizing Latitude and Longitude strings.",
   "bin": "dist/cli.js",
   "main": "dist/index.js",
