@@ -12,7 +12,7 @@
     "lint": "eslint src/**/*.ts",
     "test": "jest",
     "start": "ts-node src/cli.ts",
-    "build": "rm -r dist ; rollup -c"
+    "build": "rm -r dist ; rollup -c && chmod a+x ./dist/cli.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.0",

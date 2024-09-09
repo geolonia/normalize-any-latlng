@@ -37,6 +37,7 @@ export default [
       {
         file: packageJson.bin,
         format: 'cjs',
+        banner: '#!/usr/bin/env node',
       },
     ],
     plugins,
