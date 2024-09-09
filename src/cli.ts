@@ -1,5 +1,3 @@
-#! /usr/bin/env node
-
 import { normalize } from './index.js';
 
 const latlngStr = process.argv[2];

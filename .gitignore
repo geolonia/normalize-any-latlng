@@ -119,6 +119,3 @@ dist
 
 # use npm
 yarn.lock
-
-cjs
-esm
