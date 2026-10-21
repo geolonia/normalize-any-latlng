@@ -1,8 +1,0 @@
-.github
-src
-.editorconfig
-.eslintrc.js
-.gitignore
-jest.config.js
-rollup.config.js
-tsconfig.json

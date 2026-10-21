@@ -27,7 +27,8 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
-      - run: npm run build
+      # builds dist/ and tests the packed package (CJS, ESM, UMD global, CLI, types)
+      - run: npm run test:package
 
   publish:
     name: 'Publish npm package'

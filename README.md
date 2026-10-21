@@ -23,7 +23,12 @@ $ git clone https://github.com/geolonia/normalize-any-latlng.git
 $ cd normalize-any-latlng
 $ npm install
 $ npm test
+$ npm run test:package
 ```
+
+`npm test` runs the unit tests against `src/`. `npm run test:package` builds `dist/`, packs it with `npm pack`, and checks every entry point a consumer can use (CommonJS, ESM, browser global, CLI and TypeScript types).
+
+Both compare outputs against [test/fixtures/golden.json](./test/fixtures/golden.json), which records what the published package returns for the inputs in [test/fixtures/inputs.json](./test/fixtures/inputs.json). If you change an output on purpose, add the input to `inputs.json`, then run `npm run build && node test/generate-golden.js` and review the diff of `golden.json`.
 
 ## Usage
 
